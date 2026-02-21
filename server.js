@@ -1,6 +1,10 @@
 const express = require('express');
 const app = express(); // calling express function 
 const userRouter= require('./routers/users');
+const wordRouter = require('./routers/words');
+
+app.use('/users', userRouter);
+app.use('/words', wordRouter);
 app.set('view engine','ejs');
 app.use(express.static('public'));
 
