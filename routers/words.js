@@ -1,36 +1,29 @@
-const express = require('express');
+const express  = require('express');
 const router = express.Router();
-const {readFile, writeFile} = require('fs').promises;
+const {readFile, writeFile} = require('fs').promises; //Destructuring
 
-
-
-router.get('/word', (req, res)=>{
-res.send('Words Home Page');
-
+router.get('/', (req, res)=>{
+    res.send('Word Home Page');
 });
-
-router.get('/wotd', async (req, res)=>{
-    let wordArray= await getWordFromDictionary();
+router.get('/wotd', async (req, res) =>{
+    let wordArray = await getWordFromDictionary();
     let [word, part, definition] = wordArray;
-    res.render('wotd', {word:word, part:part, definition:definition});
-getWordFromDictionary();
-res.render('wotd');
-// do something with tht fuction
+    res.render('wotd',{word:word, part:part, definition:definition});
+    //Do something with that function up here
 });
+
+let getWordFromDictionary = async ()=>{
+    try{
+        const data = await readFile('resources/allwords.txt', 'utf8');
+        let lines = data.split('\n');
+        let randomNumber = parseInt(Math.random()*lines.length);
+        let randomLine = lines[randomNumber];
+        let wordArray = randomLine.split('\t');
+        console.log(wordArray);
+        return wordArray;
+    } catch(err){
+        console.log("There was an error reading the file:", err);
+    }
+};
 
 module.exports = router;
-
-let getWordFromDictionary = async ()=> {
-try{    
-    const data =  await readFile('resources/allwords.txt', 'utf8');
-    let lines=data.split('\n');
-    let randomNumber= parseInt(Math.random()*lines.length);
-    let randomLine= lines[randomNumber];
-    let wordArray=randomLine.split('\t');
-    console.log(wordArray);
-    return wordArray;
-}
-catch(err){
-    console.log("There was an error reading the file", err); 
-};
-}
