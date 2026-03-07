@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <h1> Welcome to Xav's EveryWord Page</h1>
+
+    <% for(let i = 0; i < allWords.length; i++){ %>
+
+        <p> WORD: <%= allWords[i].word %> </p>
+        <p> DEFINITION: <%= allWords[i].definition %> </p>
+        <p> SPEECH TYPE: <%= allWords[i].part %> </p>
+        <hr>
+
+    <% } %>
+
+</body>
+</html>
